@@ -30,7 +30,7 @@ window.addEventListener("scroll", () => {
 
   // 링크 색상 변경
   const sections = [
-    document.getElementById("mainpage"),
+    document.getElementById("main"),
     document.getElementById("sec1"),
     document.getElementById("sec2"),
     document.getElementById("sec3"),
