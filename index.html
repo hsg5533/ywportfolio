@@ -3,14 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <link rel="stylesheet" href="./css/myportfolio.css" />
-    <link
-      rel="icon"
-      href="./img/icon/apple5.png"
-      type="image/png"
-      style="width: 32px; height: 32px"
-    />
+    <link rel="icon" href="./img/icon/apple5.png" />
     <title>예이원 종합사이트</title>
   </head>
   <body>
@@ -163,7 +157,6 @@
                 <div class="sec3_img sec3_sildeimg4">
                   <img src="./img/background/signiel4.png" alt="" />
                 </div>
-                <!-- <div class="sec3_img sec3_sildeimg5"><img src="./background/signiel5.png" alt=""></div> -->
                 <input type="button" value="〈" class="sec3_btn btn_L" />
                 <input type="button" value="〉" class="sec3_btn btn_R" />
                 <div class="indis"></div>
@@ -297,27 +290,8 @@
       </div>
     </div>
 
-    <script src="./js/imgslide.js"></script>
-    <script src="./js/imgslide2.js"></script>
     <script src="./js/top.js"></script>
-    <script src="./js/scrollevent.js"></script>
     <script src="./js/nav.js"></script>
-    <script src="./js/navactive.js"></script>
-    <script>
-      $(document).ready(function () {
-        $(".navbar a").on("click", function (e) {
-          e.preventDefault();
-          var target = $(this).attr("href");
-          var targetPos = $(target).offset().top;
-
-          $("html, body").animate(
-            {
-              scrollTop: targetPos,
-            },
-            800
-          );
-        });
-      });
-    </script>
+    <script src="./js/slider.js"></script>
   </body>
 </html>

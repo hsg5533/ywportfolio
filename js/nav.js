@@ -1,24 +1,50 @@
+const navbarLinks = document.querySelectorAll(".navbar a");
 
-$(document).ready(function() {
-    var navbarLinks = $('.navbar a');
+navbarLinks.forEach((link) =>
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const targetEl = document.querySelector(link.getAttribute("href"));
+    if (!targetEl) return;
+    // 부드러운 스크롤
+    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  })
+);
 
-    function changeLinkColor() {
-        var scrollPos = $(window).scrollTop();
+// 스크롤 시 실행 함수 (내비게이션 스타일 업데이트)
+window.addEventListener("scroll", () => {
+  const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
 
-        var sec0Top = $('#mainpage').offset().top;
-        var sec1Top = $('#sec1').offset().top;
-        var sec2Top = $('#sec2').offset().top;
-        var sec3Top = $('#sec3').offset().top;
-        var sec4Top = $('#sec4').offset().top;
-
-        if ((scrollPos >= sec0Top && scrollPos < sec1Top) || 
-            (scrollPos >= sec2Top && scrollPos < sec3Top) || 
-            scrollPos >= sec4Top) {
-            navbarLinks.css('color', '#fffff0');
-        } else {
-            navbarLinks.css('color', '#25252b'); 
-        }
+  // 링크 활성화 토글
+  navbarLinks.forEach((link) => {
+    const targetEl = document.querySelector(link.getAttribute("href"));
+    if (!targetEl) return;
+    const elemTop = targetEl.offsetTop;
+    const elemBottom = elemTop + targetEl.offsetHeight;
+    if (elemTop <= scrollPos && scrollPos < elemBottom) {
+      navbarLinks.forEach((l) => l.classList.remove("active"));
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
     }
+  });
 
-    $(window).scroll(changeLinkColor);
+  // 링크 색상 변경
+  const sections = [
+    document.getElementById("mainpage"),
+    document.getElementById("sec1"),
+    document.getElementById("sec2"),
+    document.getElementById("sec3"),
+    document.getElementById("sec4"),
+  ];
+  const positions = sections.map((sec) => sec.offsetTop);
+  const [sec0Top, sec1Top, sec2Top, sec3Top, sec4Top] = positions;
+  if (
+    (scrollPos >= sec0Top && scrollPos < sec1Top) ||
+    (scrollPos >= sec2Top && scrollPos < sec3Top) ||
+    scrollPos >= sec4Top
+  ) {
+    navbarLinks.forEach((link) => (link.style.color = "#fffff0"));
+  } else {
+    navbarLinks.forEach((link) => (link.style.color = "#25252b"));
+  }
 });
