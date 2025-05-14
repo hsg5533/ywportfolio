@@ -1,48 +1,37 @@
-function initSlider({
-  img,
-  imgBox,
-  btnLeft,
-  btnRight,
-  indicator,
-  dots,
-  active,
-  button,
-}) {
-  const images = document.querySelectorAll(img);
-  const count = images.length;
-  if (!count) return;
-
+function initSlider({ img, btn, btnLeft, btnRight, indicator, dots, active }) {
   let current = 0;
   const timer = 1000;
+  const indis = [];
+  const imgs = document.querySelectorAll(img);
+  const btns = document.querySelectorAll(btn);
   const leftBtn = document.querySelector(btnLeft);
   const rightBtn = document.querySelector(btnRight);
-  const btns = document.querySelectorAll(button);
-  images[0].style.left = "0";
+  const container = document.querySelector(indicator);
+  const count = imgs.length;
+  imgs[0].style.left = "0";
 
   // 인디케이터 생성
-  const indicators = [];
-  const indicatorContainer = document.querySelector(indicator);
   for (let i = 0; i < count; i++) {
     const dot = document.createElement("div");
     dot.classList.add(dots);
     if (i === 0) dot.classList.add(active);
-    indicatorContainer.appendChild(dot);
-    indicators.push(dot);
+    container.appendChild(dot);
+    indis.push(dot);
   }
 
   // 슬라이드 함수
   const slide = (from, fromPos, to, toPos) => {
-    images[from].animate([{ left: "0" }, { left: fromPos }], {
+    imgs[from].animate([{ left: "0" }, { left: fromPos }], {
       duration: timer,
       fill: "forwards",
     });
-    images[to].style.left = toPos;
-    images[to].animate([{ left: toPos }, { left: "0" }], {
+    imgs[to].style.left = toPos;
+    imgs[to].animate([{ left: toPos }, { left: "0" }], {
       duration: timer,
       fill: "forwards",
     });
-    indicators[from].classList.remove(active);
-    indicators[to].classList.add(active);
+    indis[from].classList.remove(active);
+    indis[to].classList.add(active);
   };
 
   // 버튼 잠시 비활성화
@@ -67,21 +56,12 @@ function initSlider({
   });
 
   // 자동 재생
-  let autoId;
-  const box = document.querySelector(imgBox);
-  function startAuto() {
-    autoId = setInterval(() => rightBtn.click(), timer + 2000);
-  }
-  box.addEventListener("mouseenter", () => clearInterval(autoId));
-  box.addEventListener("mouseleave", startAuto);
-  startAuto();
+  setInterval(() => rightBtn.click(), timer + 2000);
 
   // 인디케이터 클릭
-  indicators.forEach((dot, idx) => {
+  indis.forEach((dot, idx) => {
     dot.addEventListener("click", function () {
-      const activeIdx = indicators.findIndex((el) =>
-        el.classList.contains(active)
-      );
+      const activeIdx = indis.findIndex((el) => el.classList.contains(active));
       if (activeIdx < idx) {
         disableButtons();
         slide(activeIdx, "-100%", idx, "100%");
@@ -98,21 +78,19 @@ function initSlider({
 // Initialize both sliders
 initSlider({
   img: ".sec3_img",
-  imgBox: ".sec3_imgbox",
+  btn: ".sec3_btn",
   btnLeft: ".btn_L",
   btnRight: ".btn_R",
   indicator: ".indis",
   dots: "indi",
   active: "indi_active",
-  button: ".sec3_btn",
 });
 initSlider({
   img: ".sec3_img2",
-  imgBox: ".sec3_imgbox2",
+  btn: ".sec3_btn2",
   btnLeft: ".btn_L2",
   btnRight: ".btn_R2",
   indicator: ".indis2",
   dots: "indi2",
   active: "indi2_active",
-  button: ".sec3_btn2",
 });
