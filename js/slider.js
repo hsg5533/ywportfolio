@@ -75,7 +75,6 @@ function initSlider({ img, btn, btnLeft, btnRight, indicator, dots, active }) {
   });
 }
 
-// Initialize both sliders
 initSlider({
   img: ".sec3_img",
   btn: ".sec3_btn",
